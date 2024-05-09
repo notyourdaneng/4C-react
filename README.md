@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .app-container{
+            width: 350px
+        }
+     
+            .calculator{
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                border: 1px solid black;
+
+                
+        }
+        .display{
+                grid-column-start: 1 ;
+                grid-column-end: 5;
+                text-align: end;
+                height: 50px;
+                padding-left: 10px;
+                padding-top: 5px;
+                font-size: 30px;
+        }
+      
+        button{
+            height: 50px;
+            border: 1px solid rgb(0, 0, 0);
+        }
+
+        button.operator {
+            background-color: rgb(208, 79, 187);
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+ <script type="text/babel">
+        // Intro
+        // const hello = React.createElement("h1" , {}, "Hello React!");
+        // const hello = <h4> Hello React! </h4>;
+        // const hello = (
+        //   <div>
+        //       <h1>Hello React!</h1>
+        //       <p>Lorem ipsum dolor sit.</p>
+        //    </div>
+        // )
+        // ReactDOM.render(hello, document.getElementById("app"));
+
+        // ###################################################################
+        // Functional Components
+            // function sample(){
+            //    return <h1>Hello Juan!</h1>
+            // }
+
+        // const arrow = () => <h1>Hello Juan! Arrow Function</h1>;
+
+
+        // ReactDOM.render(arrow(), document.getElementById("app"));
+
+        // ####################################################################
+        // Intro to Props in React / component
+        // const Hello = (props) => (
+        //     <div>
+        //         <h2>Hello, my name is {props.name}, I am 17 yrs old.</h2>
+        //         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, laborum.</p>
+        //         <a href="http://" target="_blank" rel="noopener noreferrer">Sample Link</a>
+        //     </div>
+        // );
+
+        // ReactDOM.render(<Hello name="Juan" age={17}/>   ,document.getElementById("app"));
+   
+       //Parent component
+       function Calculator() {
+      
+
+        // handle the numbers
+        function handleNumber (value) {
+            //alert (value);
+            let newValue = value;
+            if (!calc.isInitial) {
+                newValue= calc.current + value;
+            }
+            
+            setCalc({ current: newValue, isInitial: false})
+            
+           
+        }
+
+        // useState 
+        //const [display, setDisplay] = React.useState('0');
+
+        const [calc, setCalc] = React.useState ({
+            current: '0',
+            isInitial: true
+        });
+
+        // handle the clear button
+        function handleClear() {
+            setCalc({current: ''});
+        }
+  
+
+        return(                                                   
+           <div className="calculator">
+            <div className="display">{calc.current}</div>
+
+                 <CalcButton onClick={handleNumber} value='7'/>
+                 <CalcButton onClick={handleNumber} value='8'/>
+                 <CalcButton onClick={handleNumber} value='9'/>
+                 <CalcButton className="operator" value="+"/>
+
+                 
+                 <CalcButton onClick={handleNumber} value='4'/>
+                 <CalcButton onClick={handleNumber} value='5'/>
+                 <CalcButton onClick={handleNumber} value='6'/>
+                 <CalcButton className="operator" value="-"/>
+
+                 <CalcButton onClick={handleNumber} value='1'/>
+                 <CalcButton onClick={handleNumber} value='2'/>
+                 <CalcButton onClick={handleNumber} value='3'/>
+                 <CalcButton className="operator" value="*"/>
+
+                 <CalcButton onClick={handleClear} value="C"/>
+                 <CalcButton onClick={handleNumber} value='0'/>
+                 <CalcButton onClick={handleNumber} value="="/>
+                 <CalcButton className="operator" value="/"/>
+
+                </div>
+            )
+       } 
+
+       // child component
+    function CalcButton(props){
+        return(
+            <button className={props.className} onClick={()=>props.onClick(props.value)}>{props.value}</button>
+         )
+      }
+        ReactDOM.render(<div className="app-container"><Calculator/></div>,document.getElementById("app"));
+        
+    </script>
+</body>
+</html>
